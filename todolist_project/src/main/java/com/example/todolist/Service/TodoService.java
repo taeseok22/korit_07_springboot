@@ -34,4 +34,8 @@ public class TodoService {
     public void deleteTodo(Long id) {
         todoRepository.deleteById(id);
     }
+
+    public <TodoRequest> Todo addTodoForUser(String username, TodoRequest request) {
+        return null;
+    }
 }

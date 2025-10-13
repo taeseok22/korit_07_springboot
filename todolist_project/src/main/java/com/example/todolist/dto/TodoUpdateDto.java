@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class TodoUpdateDto {
     private String content;
+    private boolean completed;
 }
