@@ -9,13 +9,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+// JwtService와 UserDetailsServiceImpl을 주입 받을 겁니다.
+@Component
 @RequiredArgsConstructor
-// JwtService와 UserDetailsServiceImpl을 주입 받을 거다.
-
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
@@ -26,13 +27,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // header에서 사용자 이름(username)을 추출
         String username = jwtService.getAuthUser(request);
 
-        // 사용자가 존재하고 Spring Security Context에 인증 정보가 없다면
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        // 사용자가 존재하고, Spring Security Context에 인증 정보가 없다면
+        if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // DB에서 user 정보 조회
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             // 토큰이 유효하면 인증 토큰을 생성하여 SecurityContext에 등록
-            // 근데 잘 생각해보면 getAuthUser()에서 검증이 끝났음.
+            // 근데 잘 생각해보시면 getAuthUser()에서 검증이 끝났죠.
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 

@@ -31,11 +31,11 @@ public class Shoppinglist2Application implements CommandLineRunner {
 		User admin = new User("admin", passwordEncoder.encode("admin"), "ADMIN");
 		userRepository.save(admin);
 
-		// user 쇼핑 아이템 더미 데이터 추가
+
 		shoppingItemRepository.save(new ShoppingItem("우유", "1개", false, user));
 		shoppingItemRepository.save(new ShoppingItem("빵", "1봉지", true, user));
 
-		// admin 쇼핑 아이템 더미 데이터 추가
+
 		shoppingItemRepository.save(new ShoppingItem("사과", "3개", false, admin));
 
 	}
